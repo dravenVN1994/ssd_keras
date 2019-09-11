@@ -111,7 +111,8 @@ class Evaluator:
                  decoding_iou_threshold=0.45,
                  decoding_top_k=200,
                  decoding_pred_coords='centroids',
-                 decoding_normalize_coords=True):
+                 decoding_normalize_coords=True,
+				 label_encoder=None):
         '''
         Computes the mean average precision of the given Keras SSD model on the given dataset.
 
@@ -198,7 +199,8 @@ class Evaluator:
                                 decoding_border_pixels=border_pixels,
                                 round_confidences=round_confidences,
                                 verbose=verbose,
-                                ret=False)
+                                ret=False,
+								label_encoder=label_encoder)
 
         #############################################################################################
         # Get the total number of ground truth boxes for each class.
@@ -268,7 +270,8 @@ class Evaluator:
                            decoding_border_pixels='include',
                            round_confidences=False,
                            verbose=True,
-                           ret=False):
+                           ret=False,
+						   label_encoder=None):
         '''
         Runs predictions for the given model over the entire dataset given by `data_generator`.
 
@@ -333,7 +336,7 @@ class Evaluator:
         generator = self.data_generator.generate(batch_size=batch_size,
                                                  shuffle=False,
                                                  transformations=transformations,
-                                                 label_encoder=None,
+                                                 label_encoder=label_encoder,
                                                  returns={'processed_images',
                                                           'image_ids',
                                                           'evaluation-neutral',
